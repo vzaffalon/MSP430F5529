@@ -38,6 +38,28 @@
 #define ATZ_5ms (5.2*ATZ_1ms) //5,07 Msegundos
 #define ATZ_15ms (3.1*ATZ_5ms) //15,6 Msegundos
 
+//Definition of the notes' frequecies in Hertz.
+#define c 261
+#define d 294
+#define e 329
+#define f 349
+#define g 391
+#define gS 415
+#define a 440
+#define aS 455
+#define b 466
+#define cH 523
+#define cSH 554
+#define dH 587
+#define dSH 622
+#define eH 659
+#define fH 698
+#define fSH 740
+#define gH 784
+#define gSH 830
+#define aH 880
+
+
 //VARIAVEIS DO TEMPO
 int decimossegundos; //CONTADOR PARA DECIMO DE SGUNDOS
 int segundos;  //CONTADOR PARA segundosUNDOS
@@ -62,11 +84,11 @@ void timer_a_configuracao(void);
 void portas_configuracao(void);
 
 //QUESTIONS
-char *line1_questions[5]= {"Qual seu nome?","Qual a blablu?", "Qual a blabla?","Qual a hue hue?","O seu boi?"};
-char *line2_questions[5]= {"                ","                ", "                ","                ","                "};
-char *line1_options[5]= {"A:JOSE B:PEDRO","A:HAAGA B:PUBUR","A:HAAA B:PUUR","A:HABUA B:PUBUSR","A:HAAGA B:PUBUR"};
-char *line2_options[5]= {"C:JESUS D:JUE","C:JESS D:JUEa", "C:JEUS D:JUE","C:JoUS D:JUEE","C:JEASUS D:JAUE"};
-int question_answer[5]={0,2,3,1,2};
+char *line1_questions[5]= {"Quem o Kylo   ","Kylo Ren e o que", "qual o planeta  ","Quem enfrenta Va","Qual o ultimo"};
+char *line2_questions[5]= {"Ren mata?     ","de Han Solo    ?", "natal de Luke?  ","der em Mustafar?","Sith criado?"};
+char *line1_options[5]= {"A:LEIA B:HANSOLO","A:PAI B:FILHO","A:Naboo B:Corusc","A:KitB:MaceWindu","A:Maul B:Sidious"};
+char *line2_options[5]= {"C:LUKE D:REY","C:TIO D:SOBRINHO", "C:TatoineD:Jakku","C:ObiWan D:Yoda","C:Ren D:Dookan"};
+int question_answer[5]={1,1,2,2,2};
 unsigned int actualQuestion = 0;
 int questionMode = 0; //0 for question 1 for options
 int numberOfPoints = 0;
@@ -89,6 +111,190 @@ void lcd_config_pinos(void);
 void delay(unsigned long timeValue);
 void config_leds(void);
 
+void delay_ms(unsigned int ms )
+{
+    unsigned int i;
+    for (i = 0; i<= ms; i++)
+       __delay_cycles(500); //Built-in function that suspends the execution for 500 cicles
+}
+
+void delay_us(unsigned int us )
+{
+    unsigned int i;
+    for (i = 0; i<= us/2; i++)
+       __delay_cycles(1);
+}
+
+//This function generates the square wave that makes the piezo speaker sound at a determinated frequency.
+void beep(unsigned int note, unsigned int duration)
+{
+    int i;
+    long delay = (long)(10000/note);  //This is the semiperiod of each note.
+    long time = (long)((duration*100)/(delay*2));  //This is how much time we need to spend on the note.
+    for (i=0;i<time;i++)
+    {
+        P1OUT |= BIT2;     //Set P1.2...
+        delay_us(delay);   //...for a semiperiod...
+        P1OUT &= ~BIT2;    //...then reset it...
+        delay_us(delay);   //...for the other semiperiod.
+    }
+    delay_ms(20); //Add a little delay to separate the single notes
+}
+
+//This is the Imperial March code.
+//As you can see, there are lots of beeps at different frequencies and durations, and some delays to separate the various bits of this wonderful song.
+void play()
+{
+    beep(a, 500);
+    delay_ms(100);
+    beep(a, 500);
+    delay_ms(100);
+    beep(a, 500);
+    delay_ms(100);
+    beep(f, 350);
+    delay_ms(100);
+    beep(cH, 150);
+    delay_ms(100);
+    beep(a, 500);
+    delay_ms(100);
+    beep(f, 350);
+    delay_ms(100);
+    beep(cH, 150);
+    delay_ms(100);
+    beep(a, 650);
+    delay_ms(100);
+
+    delay_ms(350);
+    //end of first bit
+
+    beep(eH, 500);
+    delay_ms(100);
+    beep(eH, 500);
+    delay_ms(100);
+    beep(eH, 500);
+    delay_ms(100);
+    beep(fH, 350);
+    delay_ms(100);
+    beep(cH, 150);
+    delay_ms(100);
+    beep(gS, 500);
+    delay_ms(100);
+    beep(f, 350);
+    delay_ms(100);
+    beep(cH, 150);
+    delay_ms(100);
+    beep(a, 650);
+
+    delay_ms(350);
+
+    beep(aH, 500);
+    delay_ms(100);
+    beep(a, 300);
+    delay_ms(100);
+    beep(a, 150);
+    delay_ms(100);
+    beep(aH, 400);
+    delay_ms(100);
+    beep(gSH, 200);
+    delay_ms(100);
+    beep(gH, 200);
+    delay_ms(100);
+    beep(fSH, 125);
+    delay_ms(100);
+    beep(fH, 125);
+    delay_ms(100);
+    beep(fSH, 250);
+
+    delay_ms(250);
+
+    beep(aS, 250);
+    delay_ms(100);
+    beep(dSH, 400);
+    delay_ms(100);
+    beep(dH, 200);
+    delay_ms(100);
+    beep(cSH, 200);
+    delay_ms(100);
+    beep(cH, 125);
+    delay_ms(100);
+    beep(b, 125);
+    delay_ms(100);
+    beep(cH, 250);
+
+    delay_ms(250);
+
+    beep(f, 125);
+    delay_ms(100);
+    beep(gS, 500);
+    delay_ms(100);
+    beep(f, 375);
+    delay_ms(100);
+    beep(a, 125);
+    delay_ms(100);
+    beep(cH, 500);
+    delay_ms(100);
+    beep(a, 375);
+    delay_ms(100);
+    beep(cH, 125);
+    delay_ms(100);
+    beep(eH, 650);
+
+    beep(aH, 500);
+    delay_ms(100);
+    beep(a, 300);
+    delay_ms(100);
+    beep(a, 150);
+    delay_ms(100);
+    beep(aH, 400);
+    delay_ms(100);
+    beep(gSH, 200);
+    delay_ms(100);
+    beep(gH, 200);
+    delay_ms(100);
+    beep(fSH, 125);
+    delay_ms(100);
+    beep(fH, 125);
+    delay_ms(100);
+    beep(fSH, 250);
+
+    delay_ms(250);
+
+    beep(aS, 250);
+    delay_ms(100);
+    beep(dSH, 400);
+    delay_ms(100);
+    beep(dH, 200);
+    delay_ms(100);
+    beep(cSH, 200);
+    delay_ms(100);
+    beep(cH, 125);
+    delay_ms(100);
+    beep(b, 125);
+    delay_ms(100);
+    beep(cH, 250);
+
+    delay_ms(250);
+
+    beep(f, 250);
+    delay_ms(100);
+    beep(gS, 500);
+    delay_ms(100);
+    beep(f, 375);
+    delay_ms(50);
+    beep(cH, 125);
+    delay_ms(100);
+    beep(a, 500);
+    delay_ms(100);
+    beep(f, 375);
+    delay_ms(100);
+    beep(cH, 125);
+    delay_ms(100);
+    beep(a, 650);
+
+}
+
+
+
 //CONFIGURACAO DO CLOCK
 //SMCLK = 1.048.576
 //SMCLK/2 = 52.4288
@@ -107,6 +313,9 @@ void timer_a_configuracao(void){
 int main(void){
     WDTCTL = WDTPW | WDTHOLD;   //PARA O WATCHDOG TIMER
 
+    P1DIR|=BIT2;              // P1.2 output
+    P2DIR |= BIT5;
+    P2DIR |= BIT4;
     //COMECA EM STOP O CRONOMETRO
     running = FALSO;
     flag_linha_1 = VERDADEIRO;
@@ -143,6 +352,7 @@ int main(void){
                 break;
             case(3):
                     if(selectedLetter == question_answer[actualQuestion]){
+                        P2OUT |= BIT4;
                        if(selectedLetter == 0){
                            sprintf(primeiraLinha, "Acertou letra A");
                        }else{
@@ -161,15 +371,25 @@ int main(void){
                     }else{
 
                         if(question_answer[actualQuestion] == 0){
+                            P2OUT |= BIT5;
+                                      beep(aH, 2000);
                                           sprintf(primeiraLinha, "Errou letra A");
                                       }else{
+                                          P2OUT |= BIT5;
+                                          beep(aH, 2000);
                                           if(question_answer[actualQuestion] == 1){
+                                              P2OUT |= BIT5;
                                               sprintf(primeiraLinha, "Errou letra B");
                                       }else{
+                                          beep(aH, 2000);
                                           if(question_answer[actualQuestion] == 2){
+                                              P2OUT |= BIT5;
+                                              beep(aH, 2000);
                                               sprintf(primeiraLinha, "Errou letra C");
                                           }else{
                                               if(question_answer[actualQuestion] == 3){
+                                                  P2OUT |= BIT5;
+                                                  beep(aH, 2000);
                                                   sprintf(primeiraLinha, "Errou letra D");
                                               }
                                           }
@@ -201,7 +421,8 @@ int main(void){
                    break;
                   case(2):
                         sprintf(segundaLinha, "%d pontos      ",numberOfPoints);
-                          break;
+
+                        break;
                   case(3):
          if(question_answer[actualQuestion] == 0){
                                                   sprintf(segundaLinha, "%s",line1_options[actualQuestion]);
@@ -460,7 +681,8 @@ void delay(unsigned long timeValue){
 //VETOR DE INTERRUPCAO ALTERANDO VALORES DO CRONOMETRO
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void timera0_inte(void){
-    lcd_limpa();
+    P2OUT &= ~BIT4;
+    P2OUT &= ~BIT5;
     if(questionMode == 0){
                questionMode = 1;
            }else{
@@ -475,7 +697,10 @@ __interrupt void timera0_inte(void){
                                               questionMode = 2;
                                           }
                }else{
-
+                   P2OUT |= BIT5;
+                                          P2OUT |= BIT4;
+                                          delay_ms(4000);
+                                          play();
                }
            }
 }

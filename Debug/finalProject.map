@@ -1,10 +1,10 @@
 ******************************************************************************
                   MSP430 Linker Unix v16.9.1                   
 ******************************************************************************
->> Linked Mon Jul  3 02:41:49 2017
+>> Linked Tue Jul  4 20:58:58 2017
 
 OUTPUT FILE NAME:   <finalProject.out>
-ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 0000444e
+ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 00004488
 
 
 MEMORY CONFIGURATION
@@ -20,7 +20,7 @@ MEMORY CONFIGURATION
   INFOA                 00001980   00000080  00000000  00000080  RWIX
   USBRAM                00001c00   00000800  00000000  00000800  RWIX
   RAM                   00002400   00002000  00000136  00001eca  RWIX
-  FLASH                 00004400   0000bb80  00000272  0000b90e  RWIX
+  FLASH                 00004400   0000bb80  0000032e  0000b852  RWIX
   INT00                 0000ff80   00000002  00000000  00000002  RWIX
   INT01                 0000ff82   00000002  00000000  00000002  RWIX
   INT02                 0000ff84   00000002  00000000  00000002  RWIX
@@ -85,7 +85,7 @@ MEMORY CONFIGURATION
   INT61                 0000fffa   00000002  00000002  00000000  RWIX
   INT62                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
-  FLASH2                00010000   00014400  00000b8e  00013872  RWIX
+  FLASH2                00010000   00014400  00001256  000131aa  RWIX
 
 
 SECTION ALLOCATION MAP
@@ -113,25 +113,25 @@ section   page    origin      length       input sections
                   00004364    0000009c     --HOLE--
 
 .text:_isr 
-*          0    00004400    00000070     
-                  00004400    0000004e     main.obj (.text:_isr:timera0_inte)
-                  0000444e    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
-                  00004468    00000008                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+*          0    00004400    000000aa     
+                  00004400    00000088     main.obj (.text:_isr:timera0_inte)
+                  00004488    0000001a     rts430x_lc_rd_eabi.lib : boot_special.obj (.text:_isr:_c_int00_noargs_noexit)
+                  000044a2    00000008                            : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
 
-.cinit     0    0000460a    00000068     
-                  0000460a    00000046     (.cinit..data.load) [load image, compression = lzss]
-                  00004650    0000000c     (__TI_handler_table)
-                  0000465c    00000006     (.cinit..bss.load) [load image, compression = zero_init]
-                  00004662    00000010     (__TI_cinit_table)
+.cinit     0    000046ba    00000074     
+                  000046ba    00000052     (.cinit..data.load) [load image, compression = lzss]
+                  0000470c    0000000c     (__TI_handler_table)
+                  00004718    00000006     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000471e    00000010     (__TI_cinit_table)
 
 .binit     0    00004400    00000000     
 
 .init_array 
 *          0    00004400    00000000     UNINITIALIZED
 
-.const     0    00004470    0000019a     
-                  00004470    00000186     main.obj (.const:.string)
-                  000045f6    00000014     rts430x_lc_rd_eabi.lib : _printfi_min.obj (.const:.string)
+.const     0    000044aa    00000210     
+                  000044aa    000001fc     main.obj (.const:.string)
+                  000046a6    00000014     rts430x_lc_rd_eabi.lib : _printfi_min.obj (.const:.string)
 
 RTC        0    0000ffd2    00000002     
                   0000ffd2    00000002     rts430x_lc_rd_eabi.lib : int41.obj (.int41)
@@ -210,52 +210,58 @@ SYSNMI     0    0000fffc    00000002
 .reset     0    0000fffe    00000002     
                   0000fffe    00000002     rts430x_lc_rd_eabi.lib : boot.obj (.reset)
 
-.text      0    00010000    00000b8e     
-                  00010000    000003c6     main.obj (.text:main)
-                  000103c6    00000132     rts430x_lc_rd_eabi.lib : _printfi_min.obj (.text:_setfield)
-                  000104f8    000000dc                            : _printfi_min.obj (.text:_pproc_diouxp)
-                  000105d4    000000d2                            : _printfi_min.obj (.text:__TI_printfi_minimal)
-                  000106a6    00000082                            : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
-                  00010728    00000082     main.obj (.text:lcd_start)
-                  000107aa    00000078     rts430x_lc_rd_eabi.lib : copy_decompress_lzss.obj (.text:decompress:lzss:__TI_decompress_lzss)
-                  00010822    00000066                            : cpy_tbl.obj (.text:copy_in)
-                  00010888    00000048                            : _printfi_min.obj (.text:_pproc_str)
-                  000108d0    00000044                            : sprintf.obj (.text:sprintf)
-                  00010914    00000032     main.obj (.text:delay)
-                  00010946    00000032     main.obj (.text:lcd_config_pinos)
-                  00010978    00000030     main.obj (.text:lcd_recebe_comando)
-                  000109a8    00000026     main.obj (.text:portas_configuracao)
-                  000109ce    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  000109f2    00000020                            : sprintf.obj (.text:_outs)
-                  00010a12    0000001e                            : memccpy.obj (.text:memccpy)
-                  00010a30    0000001c     main.obj (.text:lcd_caracter)
-                  00010a4c    0000001c     main.obj (.text:lcd_escreve_byte)
-                  00010a68    0000001c     main.obj (.text:lcd_escreve_nib)
-                  00010a84    0000001a     main.obj (.text:lcd_ativa_cursor)
-                  00010a9e    0000001a     main.obj (.text:lcd_escreve_string)
-                  00010ab8    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.obj (.text)
-                  00010ad0    00000016     main.obj (.text:config_leds)
-                  00010ae6    00000016     rts430x_lc_rd_eabi.lib : memset.obj (.text:memset)
-                  00010afc    00000016                            : div16u.obj (.text)
-                  00010b12    00000014                            : sprintf.obj (.text:_outc)
-                  00010b26    00000014                            : memcpy.obj (.text:memcpy)
-                  00010b3a    00000014     main.obj (.text:timer_a_configuracao)
-                  00010b4e    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  00010b60    0000000e                            : strlen.obj (.text:strlen)
-                  00010b6e    0000000c     main.obj (.text:lcd_muda_cursor)
-                  00010b7a    00000008     main.obj (.text:lcd_limpa)
-                  00010b82    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
-                  00010b88    00000004                            : pre_init.obj (.text:_system_pre_init)
-                  00010b8c    00000002                            : startup.obj (.text:_system_post_cinit)
+.text      0    00010000    00001256     
+                  00010000    00000522     main.obj (.text:play)
+                  00010522    00000436     main.obj (.text:main)
+                  00010958    00000132     rts430x_lc_rd_eabi.lib : _printfi_min.obj (.text:_setfield)
+                  00010a8a    000000dc                            : _printfi_min.obj (.text:_pproc_diouxp)
+                  00010b66    000000d2                            : _printfi_min.obj (.text:__TI_printfi_minimal)
+                  00010c38    00000082                            : autoinit_wdt.obj (.text:_auto_init_hold_wdt)
+                  00010cba    00000082     main.obj (.text:lcd_start)
+                  00010d3c    00000078     rts430x_lc_rd_eabi.lib : copy_decompress_lzss.obj (.text:decompress:lzss:__TI_decompress_lzss)
+                  00010db4    00000070     main.obj (.text:beep)
+                  00010e24    00000066     rts430x_lc_rd_eabi.lib : cpy_tbl.obj (.text:copy_in)
+                  00010e8a    00000058                            : div32u.obj (.text)
+                  00010ee2    00000048                            : _printfi_min.obj (.text:_pproc_str)
+                  00010f2a    00000044                            : sprintf.obj (.text:sprintf)
+                  00010f6e    00000040                            : div32s.obj (.text)
+                  00010fae    00000032     main.obj (.text:delay)
+                  00010fe0    00000032     main.obj (.text:lcd_config_pinos)
+                  00011012    00000030     main.obj (.text:lcd_recebe_comando)
+                  00011042    00000026     main.obj (.text:portas_configuracao)
+                  00011068    00000024     rts430x_lc_rd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  0001108c    00000020                            : sprintf.obj (.text:_outs)
+                  000110ac    0000001e                            : memccpy.obj (.text:memccpy)
+                  000110ca    0000001c     main.obj (.text:delay_ms)
+                  000110e6    0000001c     main.obj (.text:lcd_caracter)
+                  00011102    0000001c     main.obj (.text:lcd_escreve_byte)
+                  0001111e    0000001c     main.obj (.text:lcd_escreve_nib)
+                  0001113a    0000001a     main.obj (.text:lcd_ativa_cursor)
+                  00011154    0000001a     main.obj (.text:lcd_escreve_string)
+                  0001116e    00000018     rts430x_lc_rd_eabi.lib : mult16_f5hw.obj (.text)
+                  00011186    00000016     main.obj (.text:config_leds)
+                  0001119c    00000016     rts430x_lc_rd_eabi.lib : memset.obj (.text:memset)
+                  000111b2    00000016                            : div16u.obj (.text)
+                  000111c8    00000014                            : sprintf.obj (.text:_outc)
+                  000111dc    00000014                            : memcpy.obj (.text:memcpy)
+                  000111f0    00000014     main.obj (.text:timer_a_configuracao)
+                  00011204    00000012     rts430x_lc_rd_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  00011216    00000012     main.obj (.text:delay_us)
+                  00011228    0000000e     rts430x_lc_rd_eabi.lib : strlen.obj (.text:strlen)
+                  00011236    0000000c     main.obj (.text:lcd_muda_cursor)
+                  00011242    00000008     main.obj (.text:lcd_limpa)
+                  0001124a    00000006     rts430x_lc_rd_eabi.lib : exit.obj (.text:abort)
+                  00011250    00000004                            : pre_init.obj (.text:_system_pre_init)
+                  00011254    00000002                            : startup.obj (.text:_system_post_cinit)
 
 MODULE SUMMARY
 
        Module                     code   ro data   rw data
        ------                     ----   -------   -------
     ./
-       main.obj                   1558   392       150    
+       main.obj                   3200   510       150    
     +--+--------------------------+------+---------+---------+
-       Total:                     1558   392       150    
+       Total:                     3200   510       150    
                                                           
     /Applications/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/lib/rts430x_lc_rd_eabi.lib
        _printfi_min.obj           808    20        0      
@@ -263,6 +269,8 @@ MODULE SUMMARY
        copy_decompress_lzss.obj   120    0         0      
        sprintf.obj                120    0         0      
        cpy_tbl.obj                102    0         0      
+       div32u.obj                 88     0         0      
+       div32s.obj                 64     0         0      
        copy_zero_init.obj         36     0         0      
        memccpy.obj                30     0         0      
        boot_special.obj           26     0         0      
@@ -299,24 +307,24 @@ MODULE SUMMARY
        int62.obj                  0      2         0      
        startup.obj                2      0         0      
     +--+--------------------------+------+---------+---------+
-       Total:                     1512   64        0      
+       Total:                     1664   64        0      
                                                           
        Stack:                     0      0         160    
-       Linker Generated:          0      104       0      
+       Linker Generated:          0      116       0      
     +--+--------------------------+------+---------+---------+
-       Grand Total:               3070   560       310    
+       Grand Total:               4864   690       310    
 
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 00004662 records: 2, size/record: 8, table size: 16
-	.data: load addr=0000460a, load size=00000046 bytes, run addr=00002400, run size=00000068 bytes, compression=lzss
-	.bss: load addr=0000465c, load size=00000006 bytes, run addr=00002468, run size=0000002e bytes, compression=zero_init
+__TI_cinit_table @ 0000471e records: 2, size/record: 8, table size: 16
+	.data: load addr=000046ba, load size=00000052 bytes, run addr=00002400, run size=00000068 bytes, compression=lzss
+	.bss: load addr=00004718, load size=00000006 bytes, run addr=00002468, run size=0000002e bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 00004650 records: 3, size/record: 4, table size: 12
+__TI_handler_table @ 0000470c records: 3, size/record: 4, table size: 12
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_lzss
 	index: 2, handler: __TI_decompress_none
@@ -408,7 +416,7 @@ address   name
 00000732  ADC12MEM9               
 00000733  ADC12MEM9_H             
 00000732  ADC12MEM9_L             
-00010b82  C$$EXIT                 
+0001124a  C$$EXIT                 
 000008c0  CBCTL0                  
 000008c1  CBCTL0_H                
 000008c0  CBCTL0_L                
@@ -1079,15 +1087,15 @@ address   name
 000000a0  __STACK_SIZE            
 UNDEFED   __TI_BINIT_Base         
 UNDEFED   __TI_BINIT_Limit        
-00004662  __TI_CINIT_Base         
-00004672  __TI_CINIT_Limit        
-00004650  __TI_Handler_Table_Base 
-0000465c  __TI_Handler_Table_Limit
+0000471e  __TI_CINIT_Base         
+0000472e  __TI_CINIT_Limit        
+0000470c  __TI_Handler_Table_Base 
+00004718  __TI_Handler_Table_Limit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
-00004468  __TI_ISR_TRAP           
-000107aa  __TI_decompress_lzss    
-00010b4e  __TI_decompress_none    
+000044a2  __TI_ISR_TRAP           
+00010d3c  __TI_decompress_lzss    
+00011204  __TI_decompress_none    
 0000ffd2  __TI_int41              
 0000ffd4  __TI_int42              
 0000ffd6  __TI_int43              
@@ -1111,59 +1119,67 @@ UNDEFED   __TI_INITARRAY_Limit
 0000fffa  __TI_int61              
 0000fffc  __TI_int62              
 ffffffff  __TI_pprof_out_hndl     
-000105d4  __TI_printfi_minimal    
+00010b66  __TI_printfi_minimal    
 ffffffff  __TI_prof_data_size     
 ffffffff  __TI_prof_data_start    
-000109ce  __TI_zero_init          
+00011068  __TI_zero_init          
 ffffffff  __c_args__              
-00010afc  __mspabi_divu           
-00010ab8  __mspabi_mpyi_f5hw      
-00010afc  __mspabi_remu           
-000106a6  _auto_init_hold_wdt     
-0000444e  _c_int00_noargs_noexit  
+00010f6e  __mspabi_divli          
+000111b2  __mspabi_divu           
+00010e8a  __mspabi_divul          
+0001116e  __mspabi_mpyi_f5hw      
+00010f6e  __mspabi_remli          
+000111b2  __mspabi_remu           
+00010e8a  __mspabi_remul          
+00010c38  _auto_init_hold_wdt     
+00004488  _c_int00_noargs_noexit  
 0000fffe  _reset_vector           
 00004360  _stack                  
-00010b8c  _system_post_cinit      
-00010b88  _system_pre_init        
-00010b82  abort                   
+00011254  _system_post_cinit      
+00011250  _system_pre_init        
+0001124a  abort                   
 00002454  actualQuestion          
-00010ad0  config_leds             
-00010822  copy_in                 
-00010914  delay                   
+00010db4  beep                    
+00011186  config_leds             
+00010e24  copy_in                 
+00010fae  delay                   
+000110ca  delay_ms                
+00011216  delay_us                
 00002450  estado_chave_1          
 00002452  estado_chave_2          
 00002490  flag_linha_1            
 00002492  flag_linha_2            
-00010a84  lcd_ativa_cursor        
-00010a30  lcd_caracter            
-00010946  lcd_config_pinos        
-00010a4c  lcd_escreve_byte        
-00010a68  lcd_escreve_nib         
-00010a9e  lcd_escreve_string      
-00010b7a  lcd_limpa               
-00010b6e  lcd_muda_cursor         
-00010978  lcd_recebe_comando      
-00010728  lcd_start               
+0001113a  lcd_ativa_cursor        
+000110e6  lcd_caracter            
+00010fe0  lcd_config_pinos        
+00011102  lcd_escreve_byte        
+0001111e  lcd_escreve_nib         
+00011154  lcd_escreve_string      
+00011242  lcd_limpa               
+00011236  lcd_muda_cursor         
+00011012  lcd_recebe_comando      
+00010cba  lcd_start               
 0000245a  letterState             
 00002400  line1_options           
 00002414  line1_questions         
 00002428  line2_options           
 0000243c  line2_questions         
-00010000  main                    
-00010a12  memccpy                 
-00010b26  memcpy                  
-00010ae6  memset                  
+00010522  main                    
+000110ac  memccpy                 
+000111dc  memcpy                  
+0001119c  memset                  
 00002458  numberOfPoints          
-000109a8  portas_configuracao     
+00010000  play                    
+00011042  portas_configuracao     
 00002468  primeiraLinha           
 00002456  questionMode            
 0000245e  question_answer         
 00002494  running                 
 0000247c  segundaLinha            
 0000245c  selectedLetter          
-000108d0  sprintf                 
-00010b60  strlen                  
-00010b3a  timer_a_configuracao    
+00010f2a  sprintf                 
+00011228  strlen                  
+000111f0  timer_a_configuracao    
 00004400  timera0_inte            
 
 
@@ -1940,12 +1956,12 @@ address   name
 00004360  _stack                  
 00004400  __STACK_END             
 00004400  timera0_inte            
-0000444e  _c_int00_noargs_noexit  
-00004468  __TI_ISR_TRAP           
-00004650  __TI_Handler_Table_Base 
-0000465c  __TI_Handler_Table_Limit
-00004662  __TI_CINIT_Base         
-00004672  __TI_CINIT_Limit        
+00004488  _c_int00_noargs_noexit  
+000044a2  __TI_ISR_TRAP           
+0000470c  __TI_Handler_Table_Base 
+00004718  __TI_Handler_Table_Limit
+0000471e  __TI_CINIT_Base         
+0000472e  __TI_CINIT_Limit        
 0000ffd2  __TI_int41              
 0000ffd4  __TI_int42              
 0000ffd6  __TI_int43              
@@ -1969,39 +1985,47 @@ address   name
 0000fffa  __TI_int61              
 0000fffc  __TI_int62              
 0000fffe  _reset_vector           
-00010000  main                    
-000105d4  __TI_printfi_minimal    
-000106a6  _auto_init_hold_wdt     
-00010728  lcd_start               
-000107aa  __TI_decompress_lzss    
-00010822  copy_in                 
-000108d0  sprintf                 
-00010914  delay                   
-00010946  lcd_config_pinos        
-00010978  lcd_recebe_comando      
-000109a8  portas_configuracao     
-000109ce  __TI_zero_init          
-00010a12  memccpy                 
-00010a30  lcd_caracter            
-00010a4c  lcd_escreve_byte        
-00010a68  lcd_escreve_nib         
-00010a84  lcd_ativa_cursor        
-00010a9e  lcd_escreve_string      
-00010ab8  __mspabi_mpyi_f5hw      
-00010ad0  config_leds             
-00010ae6  memset                  
-00010afc  __mspabi_divu           
-00010afc  __mspabi_remu           
-00010b26  memcpy                  
-00010b3a  timer_a_configuracao    
-00010b4e  __TI_decompress_none    
-00010b60  strlen                  
-00010b6e  lcd_muda_cursor         
-00010b7a  lcd_limpa               
-00010b82  C$$EXIT                 
-00010b82  abort                   
-00010b88  _system_pre_init        
-00010b8c  _system_post_cinit      
+00010000  play                    
+00010522  main                    
+00010b66  __TI_printfi_minimal    
+00010c38  _auto_init_hold_wdt     
+00010cba  lcd_start               
+00010d3c  __TI_decompress_lzss    
+00010db4  beep                    
+00010e24  copy_in                 
+00010e8a  __mspabi_divul          
+00010e8a  __mspabi_remul          
+00010f2a  sprintf                 
+00010f6e  __mspabi_divli          
+00010f6e  __mspabi_remli          
+00010fae  delay                   
+00010fe0  lcd_config_pinos        
+00011012  lcd_recebe_comando      
+00011042  portas_configuracao     
+00011068  __TI_zero_init          
+000110ac  memccpy                 
+000110ca  delay_ms                
+000110e6  lcd_caracter            
+00011102  lcd_escreve_byte        
+0001111e  lcd_escreve_nib         
+0001113a  lcd_ativa_cursor        
+00011154  lcd_escreve_string      
+0001116e  __mspabi_mpyi_f5hw      
+00011186  config_leds             
+0001119c  memset                  
+000111b2  __mspabi_divu           
+000111b2  __mspabi_remu           
+000111dc  memcpy                  
+000111f0  timer_a_configuracao    
+00011204  __TI_decompress_none    
+00011216  delay_us                
+00011228  strlen                  
+00011236  lcd_muda_cursor         
+00011242  lcd_limpa               
+0001124a  C$$EXIT                 
+0001124a  abort                   
+00011250  _system_pre_init        
+00011254  _system_post_cinit      
 ffffffff  __TI_pprof_out_hndl     
 ffffffff  __TI_prof_data_size     
 ffffffff  __TI_prof_data_start    
@@ -2011,4 +2035,4 @@ UNDEFED   __TI_BINIT_Limit
 UNDEFED   __TI_INITARRAY_Base     
 UNDEFED   __TI_INITARRAY_Limit    
 
-[839 symbols]
+[847 symbols]
