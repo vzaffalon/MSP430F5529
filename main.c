@@ -38,7 +38,7 @@
 #define ATZ_5ms (5.2*ATZ_1ms) //5,07 Msegundos
 #define ATZ_15ms (3.1*ATZ_5ms) //15,6 Msegundos
 
-//Definition of the notes' frequecies in Hertz.
+//DEFINICAO DA FREQUENCIA EM HZ DAS NOTAS MUSICAIS
 #define c 261
 #define d 294
 #define e 329
@@ -71,7 +71,7 @@ char primeiraLinha[20]; //VETOR DE CARACTERES LINHA 1
 char segundaLinha[20]; //VETOR DE CARACTERES LINHA 2
 
 //MODIFICADORES DE ESTADO DO PROGRAMA
-int running;    //MODIFICA ESTADO PARA running/STOP
+int running;    //MODIFICA ESTADO PARA RUNNING/STOP
 int flag_linha_1;  //FLAG PARA IMPRESSAO NA LINHA 1
 int flag_linha_2; //FLAG PARA IMPRESSAO NA LINHA 2
 
@@ -83,7 +83,7 @@ int estado_chave_2=ABERTA; //estado anterior de SW2
 void timer_a_configuracao(void);
 void portas_configuracao(void);
 
-//QUESTIONS
+//PERGUNTAS
 char *line1_questions[5]= {"Quem o Kylo   ","Kylo Ren e o que", "qual o planeta  ","Quem enfrenta Va","Qual o ultimo"};
 char *line2_questions[5]= {"Ren mata?     ","de Han Solo    ?", "natal de Luke?  ","der em Mustafar?","Sith criado?"};
 char *line1_options[5]= {"A:LEIA B:HANSOLO","A:PAI B:FILHO","A:Naboo B:Corusc","A:KitB:MaceWindu","A:Maul B:Sidious"};
@@ -115,7 +115,7 @@ void delay_ms(unsigned int ms )
 {
     unsigned int i;
     for (i = 0; i<= ms; i++)
-       __delay_cycles(500); //Built-in function that suspends the execution for 500 cicles
+       __delay_cycles(500); //SUSPENDE A EXECUCAO POR 500MS
 }
 
 void delay_us(unsigned int us )
@@ -125,24 +125,24 @@ void delay_us(unsigned int us )
        __delay_cycles(1);
 }
 
-//This function generates the square wave that makes the piezo speaker sound at a determinated frequency.
+//GERA A ONDA QUADRADA NECESSARIA PARA O PIEZO SPEAKER EXECUTAR UM SOM EM DETERMINADA FREQUENCIA
 void beep(unsigned int note, unsigned int duration)
 {
     int i;
-    long delay = (long)(10000/note);  //This is the semiperiod of each note.
-    long time = (long)((duration*100)/(delay*2));  //This is how much time we need to spend on the note.
+    long delay = (long)(10000/note);  //SEMIPERIODO DE CADA NOTA.
+    long time = (long)((duration*100)/(delay*2));  //TEMPO TOTAL DE EXECUCAO DA NOTA
     for (i=0;i<time;i++)
     {
-        P1OUT |= BIT2;     //Set P1.2...
-        delay_us(delay);   //...for a semiperiod...
-        P1OUT &= ~BIT2;    //...then reset it...
-        delay_us(delay);   //...for the other semiperiod.
+        P1OUT |= BIT2;     //PINO P1.2 SETADO
+        delay_us(delay);   //DELAY DO SEMIPERIODO
+        P1OUT &= ~BIT2;    //RESETA O ESTADO DO PINO
+        delay_us(delay);   //DELAY DO SEMIPERIODO
     }
-    delay_ms(20); //Add a little delay to separate the single notes
+    delay_ms(20); //DELAY MINIMO PARA SEPARAR UMA NOTA DA OUTRA
 }
 
-//This is the Imperial March code.
-//As you can see, there are lots of beeps at different frequencies and durations, and some delays to separate the various bits of this wonderful song.
+//CODIGO EXECUTANDO AS NOTAS DA MUSICA
+//CADA BEEP EXECUTA UMA NOTA MUSICAL COM UM DETERMINADO PERIODO DE TEMPO
 void play()
 {
     beep(a, 500);
@@ -165,7 +165,7 @@ void play()
     delay_ms(100);
 
     delay_ms(350);
-    //end of first bit
+    //INVERTALO ENTRE PRIMEIRA E SEGUNDA PARTE
 
     beep(eH, 500);
     delay_ms(100);
@@ -294,26 +294,16 @@ void play()
 }
 
 
-
-//CONFIGURACAO DO CLOCK
-//SMCLK = 1.048.576
-//SMCLK/2 = 52.4288
-//0,1S = 52.429
-//ARREDODAN PARA 21.000
 void timer_a_configuracao(void){
-  TA0CTL = TBSSEL_1 |  MC_1  |  ID_2;       //FONT SMCLK MODO COUT UP DIVISOR POR 2
-  TA0CCR0 = MAXIMOVALOR;        //DEFINE VALOR DE CCR0 PARA PERIODO 0,1ms
+  TA0CTL = TBSSEL_1 |  MC_1  |  ID_2;       //FONT 32768HZ MODO COUT UP DIVISOR POR 4
+  TA0CCR0 = MAXIMOVALOR;        //DEFINE VALOR DE CCR0 PARA PERIODO DE 5SEGUNDOS
   TA0CCTL0 = CCIE;     //HABILITA INTERRUPCAO QUANDO ATINGE CCR0
 }
 
-// CRONOMETRO INFORMACOES
-//SW1 TROCA MODO RUNNING/STOPED
-//SW2 CONFIGURA LAP/RESET
-//PRECISAO DEFINIDA PARA 0,1 segundos
 int main(void){
     WDTCTL = WDTPW | WDTHOLD;   //PARA O WATCHDOG TIMER
 
-    P1DIR|=BIT2;              // P1.2 output
+    P1DIR|=BIT2;              // P1.2 SAIDA
     P2DIR |= BIT5;
     P2DIR |= BIT4;
     //COMECA EM STOP O CRONOMETRO
@@ -333,13 +323,9 @@ int main(void){
     _enable_interrupt();
 
     while(1){
-      //VERIFICA LINHA 1 LIBERADA
+      //ESCREVE NA LINHA 1 DO LCD
       if (flag_linha_1){
-        //flag_linha_1 = FALSO;
-        //LINHA 1 TRAVADA
         lcd_muda_cursor(0);
-
-        //PRINTA NO FORMATO CORRETO NO LCD
         switch(questionMode){
             case(0):
                      sprintf(primeiraLinha, "%s",line1_questions[actualQuestion]);
@@ -405,10 +391,8 @@ int main(void){
         lcd_escreve_string(primeiraLinha);
         lcd_escreve_string("   ");
       }
-      //VERIFICA LINHA 2 LIBERADO
+      //ESCREVE NA LINHA 2 DO LCD
       if(flag_linha_2){
-        //flag_linha_2 = FALSO;
-        //LINHA 2 TRAVADA
         lcd_muda_cursor(0x40);
 
 
@@ -452,7 +436,6 @@ int main(void){
 
 
       //VERIFICA CLIQUE NA CHAVE 2
-      //RESPONSAVEL PELO LAP/RESET
       if ((SW2_IN & SW2) == 0){
         if (estado_chave_2 == ABERTA){
           //SALVA NOVO ESTADO DA CHAVE
@@ -490,7 +473,6 @@ int main(void){
       }
 
       //VERIFICA CLIQUE NA CHAVE 1
-      //CHAVE 1 TROCA ESTADO DE RUNNING PRA STOP
       if((SW1_IN & SW1) == 0){
         if (estado_chave_1 == ABERTA){
           //VERIFICA ESTADO ANTERIOR DA CHAVE
@@ -630,7 +612,6 @@ void lcd_home(void){
 }
 
 void config_leds(void){
-    //config leds
         P1DIR |= LED1;
         P1OUT &= (~LED1);
 
@@ -678,7 +659,11 @@ void delay(unsigned long timeValue){
   }
 }
 
-//VETOR DE INTERRUPCAO ALTERANDO VALORES DO CRONOMETRO
+//VETOR DE INTERRUPCAO ALTERANDO ESTADO DO LCD
+//ESTADO 0 MOSTRA PERGUNTA
+//ESTADO 1 MOSTRA ALTERNATIVAS
+//ESTADO 2 PROGRAMA FINALIZADO MOSTRA PONTUACAO E TOCA MUSICA
+//ESTADO 3 ALTERNATIVA DA RESPOSTA SELECIONADA
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void timera0_inte(void){
     P2OUT &= ~BIT4;
